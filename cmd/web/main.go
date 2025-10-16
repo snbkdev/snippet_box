@@ -8,6 +8,17 @@ import (
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "public, max-age=31536000")
+	
+	w.Header().Add("Cache-Control", "public")
+	w.Header().Add("Cache-Control", "max-age=31536000")
+
+	w.Header().Del("Cache-Control")
+
+	w.Header().Get("Cache-Control")
+
+	w.Header().Values("Cache-Control")
+
 	w.Write([]byte("Welcome to Snippet-Box"))
 }
 
@@ -18,8 +29,8 @@ func snippetView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg := fmt.Sprintf("Display a specific snippet with ID %d ...", id)
-	w.Write([]byte(msg))
+	fmt.Fprintf(w, "Display a specific snippet with ID %d ...", id)
+	//io.WriteString(w, msg)
 }
 
 func snippetCreate(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +39,7 @@ func snippetCreate(w http.ResponseWriter, r *http.Request) {
 
 func snippetCreatePost(w http.ResponseWriter, r *http.Request) {
 	// Use the w.WriteHeader() method to send a 201 status code
-	w.WriteHeader(201)
+	w.WriteHeader(http.StatusCreated)
 
 	w.Write([]byte("Save a new snippet ..."))
 }
