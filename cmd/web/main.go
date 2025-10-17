@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"log"
+	"log/slog"
 	"net/http"
+	"os"
 )
 
 type config struct {
@@ -11,29 +12,36 @@ type config struct {
 	staticDir string
 }
 
+type application struct {
+	logger *slog.Logger
+}
+
 func main() {
 	addr := flag.String("addr", ":4060", "HTTP network address")
-	//addr2 := os.Getenv("SNIPPETBOX_ADDR")
-
-	var cfg config
-
-	flag.StringVar(&cfg.addr, "addr", ":4080", "HTTP network address")
-	flag.StringVar(&cfg.staticDir, "static-dir", "./ui/static", "Path to static assets")
-
 	flag.Parse()
+
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelDebug,
+		//AddSource: true,
+	}))
+
+	app := &application{
+		logger: logger,
+	}
 
 	mux := http.NewServeMux()
 
 	fileServer := http.FileServer(http.Dir("./ui/static/"))
 	mux.Handle("GET /static/", http.StripPrefix("/static", fileServer))
 
-	mux.HandleFunc("GET /{$}", home)
-	mux.HandleFunc("GET /snippet/view/{id}", snippetView)
-	mux.HandleFunc("GET /snippet/create", snippetCreate)
-	mux.HandleFunc("POST /snippet/create", snippetCreatePost)
+	mux.HandleFunc("GET /{$}", app.home)
+	mux.HandleFunc("GET /snippet/view/{id}", app.snippetView)
+	mux.HandleFunc("GET /snippet/create", app.snippetCreate)
+	mux.HandleFunc("POST /snippet/create", app.snippetCreatePost)
 
-	log.Print("starting server on %s", *addr)
+	logger.Info("strating server on", "addr", *addr)
 
 	err := http.ListenAndServe(*addr, mux)
-	log.Fatal(err)
+	logger.Error(err.Error())
+	os.Exit(1)
 }
