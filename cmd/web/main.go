@@ -2,12 +2,14 @@ package main
 
 import (
 	"database/sql"
-	_ "github.com/lib/pq"
 	"flag"
+	"lets_go/internal/models"
 	"log"
 	"log/slog"
 	"net/http"
 	"os"
+
+	_ "github.com/lib/pq"
 )
 
 type config struct {
@@ -17,6 +19,7 @@ type config struct {
 
 type application struct {
 	logger *slog.Logger
+	snippets *models.SnippetModel
 }
 
 func main() {
@@ -37,6 +40,7 @@ func main() {
 
 	app := &application{
 		logger: logger,
+		snippets: &models.SnippetModel{DB: db},
 	}
 
 	logger.Info("strating server on", "addr", *addr)
