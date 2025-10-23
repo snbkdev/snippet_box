@@ -32,7 +32,7 @@ func main() {
 	}))
 
 	connStr := "user=user password=password dbname=dbname host=host port=port sslmode=disable"
-    db, err := openDB(connStr)
+	db, err := openDB(connStr)
     if err != nil {
         log.Fatal(err)
     }

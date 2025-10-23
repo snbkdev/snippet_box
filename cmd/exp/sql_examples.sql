@@ -15,19 +15,3 @@ VALUES (
     NOW() AT TIME ZONE 'UTC',
     (NOW() AT TIME ZONE 'UTC') + INTERVAL '365 days'
 );
-
-insert into snippets (title, content, created, expires)
-values(
-'Carried nothing on am warrant towards',
-'Polite in of in oh needed itself silent course. Assistance travelling so especially do prosperous appearance mr no celebrated. Wanted easily in my called formed suffer. Songs hoped sense as taken ye mirth at. Believe fat how six drawing pursuit minutes far. Same do seen head am part it dear open to. Whatever may scarcely judgment had.',
-NOW() AT TIME ZONE 'UTC',
-    (NOW() AT TIME ZONE 'UTC') + INTERVAL '365 days'
-)
-
-insert into snippets (title, content, created, expires)
-values(
-'Improved own provided blessing may peculiar domestic',
-'Sight house has sex never. No visited raising gravity outward subject my cottage mr be. Hold do at tore in park feet near my case. Invitation at understood occasional sentiments insipidity inhabiting in. Off melancholy alteration principles old. Is do speedily kindness properly oh. Respect article painted cottage he is offices parlors.',
-NOW() AT TIME ZONE 'UTC',
-    (NOW() AT TIME ZONE 'UTC') + INTERVAL '365 days'
-)
