@@ -319,3 +319,30 @@ footer {
     color: #6A6C6F;
     text-align: center;
 }
+
+/* Для основного текстового контента */
+.snippet-content {
+    padding: 18px;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+/* Для заголовков внутри сниппетов */
+.snippet-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+/* Если текст находится в pre тегах */
+.snippet pre {
+    padding: 18px;
+    border-top: 1px solid #E4E5E7;
+    border-bottom: 1px solid #E4E5E7;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-x: auto;
+}
