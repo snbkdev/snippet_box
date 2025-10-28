@@ -23,19 +23,15 @@ func (m *SnippetModel) Insert(title string, content string, expires int) (int, e
         VALUES ($1, $2, 
             CURRENT_TIMESTAMP AT TIME ZONE 'UTC',
             CURRENT_TIMESTAMP AT TIME ZONE 'UTC' + ($3 * INTERVAL '1 day')
-        ) RETURNING id`
+        ) RETURNING id;`
 
-	result, err := m.DB.Exec(stmt, title, content, expires)
+	var id int
+	err := m.DB.QueryRow(stmt, title, content, expires).Scan(&id)
 	if err != nil {
 		return 0, err
 	}
 
-	id, err := result.LastInsertId()
-	if err != nil {
-		return 0, nil
-	}
-
-	return int(id), nil
+	return id, nil
 }
 
 func (m *SnippetModel) Get(id int) (Snippet, error) {
