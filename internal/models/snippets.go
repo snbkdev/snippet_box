@@ -20,10 +20,7 @@ type SnippetModel struct {
 
 func (m *SnippetModel) Insert(title string, content string, expires int) (int, error) {
 	stmt := `INSERT INTO snippets (title, content, created, expires)
-        VALUES ($1, $2, 
-            CURRENT_TIMESTAMP AT TIME ZONE 'UTC',
-            CURRENT_TIMESTAMP AT TIME ZONE 'UTC' + ($3 * INTERVAL '1 day')
-        ) RETURNING id;`
+        VALUES ($1, $2, NOW(), NOW() + ($3 * INTERVAL '1 day')) RETURNING id;`
 
 	var id int
 	err := m.DB.QueryRow(stmt, title, content, expires).Scan(&id)
