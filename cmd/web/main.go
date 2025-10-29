@@ -3,12 +3,13 @@ package main
 import (
 	"database/sql"
 	"flag"
+	"html/template"
 	"lets_go/internal/models"
 	"log/slog"
 	"net/http"
 	"os"
-	"html/template"
 
+	"github.com/go-playground/form/v4"
 	_ "github.com/lib/pq"
 )
 
@@ -21,6 +22,7 @@ type application struct {
 	logger *slog.Logger
 	snippets *models.SnippetModel
 	templateCache map[string]*template.Template
+	formDecoder *form.Decoder
 }
 
 func main() {
@@ -43,10 +45,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	formDecoder := form.NewDecoder()
+
 	app := &application{
 		logger: logger,
 		snippets: &models.SnippetModel{DB: db},
 		templateCache: templateCache,
+		formDecoder: formDecoder,
 	}
 
 	logger.Info("strating server on", "addr", *addr)
