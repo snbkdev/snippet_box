@@ -98,3 +98,23 @@ func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request
 func downloadHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./ui/static/file.zip")
 }
+
+func (app *application) userSignUp(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Display a form for signing up a new user ...")
+}
+
+func (app *application) userSignUpPost(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Create a new user ...")
+}
+
+func (app *application) userLogIn(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Display a form for logging in a user ...")
+}
+
+func (app *application) userLogInPost(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Authenticate and login the user ...")
+}
+
+func (app *application) userLogOutPost(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Log Out the user ...")
+}
