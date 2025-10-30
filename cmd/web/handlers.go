@@ -99,8 +99,17 @@ func downloadHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "./ui/static/file.zip")
 }
 
+type userSignUpForm struct {
+	Name string `form:"name"`
+	Email string `form:"email"`
+	Password string `form:"password"`
+	validator.Validator `form:"-"`
+}
+
 func (app *application) userSignUp(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Display a form for signing up a new user ...")
+	data := app.newTemplateData(r)
+	data.Form = userSignUpForm{}
+	app.render(w, r, http.StatusOK, "signup.tmpl", data)
 }
 
 func (app *application) userSignUpPost(w http.ResponseWriter, r *http.Request) {

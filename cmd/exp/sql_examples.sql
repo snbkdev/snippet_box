@@ -15,3 +15,13 @@ VALUES (
     NOW() AT TIME ZONE 'UTC',
     (NOW() AT TIME ZONE 'UTC') + INTERVAL '365 days'
 );
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    hashed_password CHAR(60) NOT NULL,
+    created TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE users ADD CONSTRAINT users_uc_email UNIQUE (email);
