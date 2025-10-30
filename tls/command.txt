@@ -1,0 +1,6 @@
+# Чтобы создать сертификат внутри папки tls запускаем ниже указанный код
+go run /usr/local/go/src/crypto/tls/generate_cert.go --rsa-bits=2048 --host=localhost
+
+# При успешном запуске команды результат выдаст два файла:
+cert.pem
+key.pem

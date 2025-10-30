@@ -27,3 +27,18 @@
 go.work
 
 # End of https://www.toptal.com/developers/gitignore/api/go
+
+# SSL certificates and keys
+cert.pem
+key.pem
+tls/cert.pem
+tls/key.pem
+
+# SSL/TLS Files
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+*.der

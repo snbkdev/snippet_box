@@ -55,6 +55,8 @@ func main() {
 	sessionManager.Store = postgresstore.New(db)
 	sessionManager.Lifetime = 12 * time.Hour
 
+	sessionManager.Cookie.Secure = true
+
 	app := &application{
 		logger: logger,
 		snippets: &models.SnippetModel{DB: db},
@@ -71,7 +73,7 @@ func main() {
 
 	logger.Info("strating server on", "addr", *addr)
 
-	err = srv.ListenAndServe()
+	err = srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
 	logger.Error(err.Error())
 	os.Exit(1)
 }
