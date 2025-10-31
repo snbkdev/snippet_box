@@ -154,8 +154,16 @@ func (app *application) userSignUpPost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
 }
 
+type userLogInForm struct {
+	Email string `form:"email"`
+	Password string `form:"password"`
+	validator.Validator `form:"-"`
+}
+
 func (app *application) userLogIn(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Display a form for logging in a user ...")
+	data := app.newTemplateData(r)
+	data.Form = userLogInForm{}
+	app.render(w, r, http.StatusOK, "login.tmpl", data)
 }
 
 func (app *application) userLogInPost(w http.ResponseWriter, r *http.Request) {
