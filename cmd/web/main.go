@@ -18,16 +18,16 @@ import (
 )
 
 type config struct {
-	addr string
+	addr      string
 	staticDir string
 }
 
 type application struct {
-	logger *slog.Logger
-	snippets *models.SnippetModel
-	users *models.UserModel
-	templateCache map[string]*template.Template
-	formDecoder *form.Decoder
+	logger         *slog.Logger
+	snippets       *models.SnippetModel
+	users          *models.UserModel
+	templateCache  map[string]*template.Template
+	formDecoder    *form.Decoder
 	sessionManager *scs.SessionManager
 }
 
@@ -39,11 +39,11 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
 	db, err := openDB(connStr)
-    if err != nil {
-        logger.Error(err.Error())
+	if err != nil {
+		logger.Error(err.Error())
 		os.Exit(1)
-    }
-    defer db.Close()
+	}
+	defer db.Close()
 
 	templateCache, err := newTemplateCache()
 	if err != nil {
@@ -60,11 +60,11 @@ func main() {
 	sessionManager.Cookie.Secure = true
 
 	app := &application{
-		logger: logger,
-		snippets: &models.SnippetModel{DB: db},
-		users: &models.UserModel{DB: db},
-		templateCache: templateCache,
-		formDecoder: formDecoder,
+		logger:         logger,
+		snippets:       &models.SnippetModel{DB: db},
+		users:          &models.UserModel{DB: db},
+		templateCache:  templateCache,
+		formDecoder:    formDecoder,
 		sessionManager: sessionManager,
 	}
 
@@ -73,12 +73,12 @@ func main() {
 	}
 
 	srv := &http.Server{
-		Addr: *addr,
-		Handler: app.routes(),
-		ErrorLog: slog.NewLogLogger(logger.Handler(), slog.LevelError),
-		TLSConfig: tlsConfig,
-		IdleTimeout: time.Minute,
-		ReadTimeout: 5 * time.Second,
+		Addr:         *addr,
+		Handler:      app.routes(),
+		ErrorLog:     slog.NewLogLogger(logger.Handler(), slog.LevelError),
+		TLSConfig:    tlsConfig,
+		IdleTimeout:  time.Minute,
+		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
 	}
 
