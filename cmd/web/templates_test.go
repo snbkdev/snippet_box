@@ -1,6 +1,7 @@
 package main
 
 import (
+	"lets_go/internal/assert"
 	"testing"
 	"time"
 )
@@ -32,9 +33,7 @@ func TestHumanDate(t *testing.T) {
 		t.Run(tt.name, func (t *testing.T) {
 			hd := humanDate(tt.tm)
 
-			if hd != tt.want {
-				t.Errorf("got %q; want %q", hd, tt.want)
-			}
+			assert.Equal(t, hd, tt.want)
 		})
 	}
 }
