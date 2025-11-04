@@ -33,7 +33,7 @@ type application struct {
 
 func main() {
 	addr := flag.String("addr", ":4060", "HTTP network address")
-	connStr := "user=postgres password=secretPassword dbname=snippet host=localhost port=5432  sslmode=disable"
+	connStr := "user=user password=password dbname=dbname host=host port=port sslmode=disable"
 	flag.Parse()
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
